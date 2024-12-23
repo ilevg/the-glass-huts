@@ -1,0 +1,82 @@
+.calendarCont {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid black;
+    background-color: white;
+    z-index: 10;
+}
+
+.calendar {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.weekDays {
+    text-align: center;
+    color: #5B6460;
+}
+
+.dateCont {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.dayBtn {
+    width: 100%;
+    height: 40px;
+    text-align: center;
+}
+
+.booked {
+    cursor: auto;
+    color: #bebebe;
+    text-decoration: line-through;
+}
+
+.startDay,
+.endDay {
+    position: relative;
+    color: #fff;
+
+    &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: block;
+        width: 100%;
+        height: 40px;
+        background-color: rgb(91, 100, 96);
+        border-radius: 50%;
+        z-index: -1;
+    }
+}
+
+.startDay {
+    border-radius: 50% 0 0 50%;
+}
+
+.endDay {
+    border-radius: 0 50% 50% 0;
+}
+
+.rangeDays {
+    background-color: rgba(#000000, .1);
+}
+
+.btnCont {
+    margin: 0 0 0 auto;
+    width: fit-content;
+
+    .btnClear {
+        text-decoration: underline;
+    }
+
+    .btnChoose {
+        margin-left: 10px;
+        padding: 10px;
+        background-color: #5B6460;
+        color: #fff;
+    }
+}

@@ -1,0 +1,110 @@
+.burger {
+    overflow: hidden;
+
+    @media (width > 1199px) {
+        display: none;
+    }
+}
+
+.burgerBtn,
+.burgerBtnOpen {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    z-index: 20;
+
+    .line,
+    .lineOpen,
+    .lineOpenSec {
+        display: block;
+        width: 20px;
+        height: 1px;
+        background-color: #000000;
+        transition: transform ease .5s;
+    }
+
+    .lineOpen {
+        transform: rotate(-45deg);
+    }
+
+    .lineOpenSec {
+        position: absolute;
+        transform: rotate(45deg);
+    }
+}
+
+.burgerBtnOpen {
+    position: absolute;
+    top: 50px;
+}
+
+.navCont {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba($color: #000000, $alpha: .3);
+    z-index: 10;
+    opacity: 1;
+}
+
+.navContClose {
+    transform: translate(-100%);
+}
+
+.nav {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 320px;
+    padding-top: 150px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    background-color: #fff;
+    z-index: 10;
+    transition: transform .5s ease, opacity .5s ease;
+
+    @media (width < 768px) {
+        width: 100%;
+    }
+}
+
+.navOpen {
+    opacity: 1;
+}
+
+.navClose {
+    opacity: 0;
+    transform: translateX(-100px);
+}
+
+.link {
+    color: #111;
+    transition: text-shadow .3s ease;
+
+    &:hover {
+        text-shadow: 1px 8px 5px #484848;
+    }
+}
+
+.langbtn {
+    background-color: transparent;
+    border: none;
+
+}
+
+.langIcon {
+    background-color: transparent;
+    transition: transform .3s ease;
+
+    &:hover {
+        transform: scale(110%);
+    }
+}

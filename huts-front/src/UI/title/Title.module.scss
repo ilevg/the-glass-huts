@@ -1,0 +1,42 @@
+.heading {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 88px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 300px;
+
+    @media (width < 998px) {
+        height: 150px;
+        gap: 30px;
+    }
+}
+
+.filter {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: rgba($color: #241616, $alpha: .5);
+}
+
+.title {
+    font-size: 70px;
+    font-weight: 300;
+    color: #fff;
+    z-index: 1;
+
+    @media (width < 998px) {
+        font-size: 50px;
+    }
+}
+
+.linksCont {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    z-index: 1;
+}

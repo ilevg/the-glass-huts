@@ -1,0 +1,19 @@
+.hut {
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+    width: 1200px;
+    margin: 100px auto;
+
+    @media (width < 1400px) {
+        width: 100%;
+        padding: 100px;
+    }
+
+    @media (width < 998px) {
+        padding: 20px;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        gap: 50px;
+    }
+}

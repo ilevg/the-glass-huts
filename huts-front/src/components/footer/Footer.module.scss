@@ -1,0 +1,128 @@
+.footer {
+    padding: 100px 146px;
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+    background-color: var(--bg-main);
+
+    @media (width < 1400px) {
+        padding: 100px 50px;
+    }
+
+    @media (width < 1200px) {
+        padding: 80px 20px;
+    }
+
+    @media (width < 998px) {
+        flex-direction: column-reverse;
+        align-items: center;
+        gap: 30px;
+    }
+}
+
+.newsCont {
+    @media (width < 998px) {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+    }
+}
+
+.formContainer {
+    width: 432px;
+    margin-bottom: 70px;
+
+    @media (width < 1200px) {
+        width: 350px;
+    }
+
+    @media (width < 998px) {
+        margin-bottom: 30px;
+        width: 100%;
+    }
+}
+
+.newsTitle {
+    @media (width < 998px) {
+        text-align: center;
+    }
+}
+
+.form {
+    position: relative;
+    margin: 40px 20px 10px 0;
+    padding: 10px;
+    padding-left: 0;
+    border-bottom: 1px solid #fff;
+
+    &::placeholder {
+        font-size: 20px;
+    }
+
+    @media (width < 998px) {
+        margin-top: 10px;
+    }
+}
+
+.formInput,
+.formBtn {
+    background-color: transparent;
+    border: none;
+}
+
+.formBtn {
+    position: absolute;
+    right: 0;
+    transition: transform .3s ease;
+
+    &:hover {
+        transform: scale(120%);
+    }
+}
+
+.formText {
+    line-height: 2;
+}
+
+.navList {
+    margin-bottom: 60px;
+    display: flex;
+    gap: 32px;
+
+    @media (width < 998px) {
+        margin-bottom: 30px;
+    }
+
+    @media (width < 998px) {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+.navLink {
+    color: #fff;
+    transition: text-shadow .3s ease;
+
+    &:hover {
+        text-shadow: 1px 8px 5px;
+    }
+}
+
+.payMeth {
+    display: flex;
+    justify-content: end;
+    gap: 32px;
+
+    @media (width < 998px) {
+        justify-content: center;
+        margin-bottom: 40px;
+    }
+}
+
+.payMethImg {
+    display: block;
+    width: 40px;
+    height: auto;
+}

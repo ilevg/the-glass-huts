@@ -1,0 +1,26 @@
+.bookCard {
+    display: flex;
+}
+
+.priceCont {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 80px;
+    height: 60px;
+    font-size: 12px;
+    border: 1px solid #fff;
+    color: rgb(51, 51, 51);
+    background: rgb(233, 236, 224);
+
+    @media (width < 430px) {
+        display: none;
+    }
+}
+
+.price {
+    font-family: ABeeZee;
+    font-size: 20px;
+    line-height: 28px;
+}

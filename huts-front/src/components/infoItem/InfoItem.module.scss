@@ -1,0 +1,42 @@
+.cabinsCont {
+    display: flex;
+    gap: 100px;
+
+    @media (width < 998px) {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+.cabinsSliderCont {
+    width: 50%;
+
+    @media (width < 998px) {
+        width: 100%;
+    }
+}
+
+.cabinsDescCont {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 50px;
+    width: 50%;
+
+    @media (width < 998px) {
+        width: 100%;
+        gap: 20px;
+        text-align: center;
+    }
+}
+
+
+
+.cabinsDesc {
+    line-height: 2;
+}
+
+.cabinsTitle {
+    font-size: 40px;
+    color: var(--color-title-sec);
+}

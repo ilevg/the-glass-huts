@@ -13,12 +13,13 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "pg": "^8.13.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.22",
-    "eslint": "^8.50.0"
+    "eslint": "^8.50.0",
+    "nodemon": "^2.0.22"
   }
 }

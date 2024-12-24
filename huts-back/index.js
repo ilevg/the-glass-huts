@@ -1,9 +1,11 @@
 const express = require('express')
+const cors = require('cors');
 const { Pool } = require('pg')
 require('dotenv').config()
 
 const app = express()
 app.use(express.json());
+app.use(cors());
 
 const pool = new Pool({
     connectionString: process.env.POSTGRES_URL,
@@ -24,6 +26,7 @@ app.get('/api/dates', async (req, res) => {
         res.status(500).json({ error: 'Error db connections' })
     }
 })
+
 app.post('/api/dates', async (req, res) => {
     try {
         const { check_in, check_out, guests, options, total, first_name, last_name, email, phone } = req.body

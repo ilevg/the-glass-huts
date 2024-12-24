@@ -28,14 +28,6 @@ const Checkout = () => {
                             <input className={styles.input} type="email" name='email' placeholder='Email' />
                             <input className={styles.input} type="tel" name='tel' placeholder='Phone Number' />
                         </div>
-                        <div className={styles.inputsCont}>
-                            <input className={styles.input} type='text' name='address' placeholder='Address' />
-                            <input className={styles.input} type="text" name='postal' placeholder='Postal Code' />
-                        </div>
-                        <div className={styles.inputsCont}>
-                            <input className={styles.input} type="text" name='city' placeholder='City' />
-                            <input className={styles.input} type="text" name='country' placeholder='Country' />
-                        </div>
                     </form>
 
                     <h2 className={styles.subTitle}>Pay with Card</h2>

@@ -10,6 +10,9 @@ const pool = new Pool({
         rejectUnauthorized: false
     },
 })
+app.get("/", (req, res) => {
+    res.send("API is running!");
+});
 
 app.get('/api/data', async (req, res) => {
     try {

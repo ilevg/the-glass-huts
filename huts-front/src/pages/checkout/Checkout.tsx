@@ -5,55 +5,75 @@ import MyButton from '../../UI/myButton/MyButton'
 import { Link } from 'react-router-dom'
 import { useBookingContext } from '../../context'
 import { format } from "date-fns"
+import { postOrder } from '../../services/apiService'
+import { FormEvent, useState } from 'react'
 
 const Checkout = () => {
     const { start, end, guestsNumb, priceWithoutOptions, totalPrice, options, days } = useBookingContext()
 
-    const onClick = (index: number) => {
-        return true
+    const [fName, setFName] = useState<string>('aa')
+    const [lName, setLName] = useState<string>('aa')
+    const [email, setEmail] = useState<string>('aa')
+    const [phone, setPhone] = useState<string>('aa')
+
+    const orderSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
+        postOrder({
+            check_in: start,
+            check_out: end,
+            guests: guestsNumb,
+            options: JSON.stringify(options),
+            total: totalPrice,
+            first_name: fName,
+            last_name: lName,
+            email: email,
+            phone: phone,
+        })
     }
+
+
     return (
         <section className={styles.booking}>
             <Title titleText='Checkout' bg={about_4} />
             <div className={styles.bookingCont}>
-                <div className={styles.services}>
+                <form onSubmit={(e) => orderSubmit(e)} className={styles.services}>
                     <h2 className={styles.subTitle}>Personal Information</h2>
 
-                    <form className={styles.form} action="">
+                    <div className={styles.form}>
                         <div className={styles.inputsCont}>
-                            <input className={styles.input} type="text" name='fName' placeholder='First Name' />
-                            <input className={styles.input} type="text" name='lName' placeholder='Last Name' />
+                            <input required className={styles.input} type="text" name='fName' placeholder='First Name' />
+                            <input required className={styles.input} type="text" name='lName' placeholder='Last Name' />
                         </div>
                         <div className={styles.inputsCont}>
-                            <input className={styles.input} type="email" name='email' placeholder='Email' />
-                            <input className={styles.input} type="tel" name='tel' placeholder='Phone Number' />
+                            <input required className={styles.input} type="email" name='email' placeholder='Email' />
+                            <input required className={styles.input} type="tel" name='tel' placeholder='Phone Number' />
                         </div>
-                    </form>
+                    </div>
 
                     <h2 className={styles.subTitle}>Pay with Card</h2>
-                    <form action="" className={styles.form}>
+                    <div className={styles.form}>
                         <div className={styles.inputsCont}>
-                            <input className={styles.input} type="number" name='cardNumber' placeholder='Card Number' />
+                            <input required className={styles.input} type="number" name='cardNumber' placeholder='Card Number' />
                         </div>
                         <div className={styles.inputsCont}>
-                            <input className={styles.input} type="number" name='cardCcv' placeholder='CCV' />
-                            <input className={styles.input} type="date" name='cardExp' placeholder='Expiration' />
+                            <input required className={styles.input} type="number" name='cardCcv' placeholder='CCV' />
+                            <input required className={styles.input} type="date" name='cardExp' placeholder='Expiration' />
                         </div>
-                    </form>
+                    </div>
 
                     <h2 className={styles.subTitle}>Additional Information</h2>
                     <div className={styles.descCont}>
                         <textarea className={styles.textarea} placeholder='Leave a message' ></textarea>
                     </div>
                     <div>
-                        <input type='checkbox' id='termsCheck' />
+                        <input required type='checkbox' id='termsCheck' />
                         <label htmlFor="termsCheck">
                             I have read and accept
                             <Link to='/terms'>Terms & Conditions</Link>
                         </label>
                     </div>
                     <MyButton width='100%' text='CONFIRM AND PAY' bg='#5B6460' />
-                </div>
+                </form>
 
                 <div className={styles.priceCardCont}>
                     <h2 className={styles.subTitle}>Total</h2>
@@ -63,24 +83,24 @@ const Checkout = () => {
                         </div>
 
                         <div className={styles.chooseDate}>
-                            <form className={styles.chooseInputCont}>
+                            <div className={styles.chooseInputCont}>
                                 <span>Check in</span>
                                 <span>{start && format(start, 'd MMM yyyy')}</span>
-                            </form>
+                            </div>
 
                             <div className={styles.line}></div>
 
-                            <form className={styles.chooseInputCont}>
+                            <div className={styles.chooseInputCont}>
                                 <span>Check out</span>
                                 <span>{end && format(end, 'd MMM yyyy')}</span>
-                            </form>
+                            </div>
 
                             <div className={styles.line}></div>
 
-                            <form className={styles.chooseInputCont}>
+                            <div className={styles.chooseInputCont}>
                                 <span>Guests</span>
                                 <span>{guestsNumb}</span>
-                            </form>
+                            </div>
                         </div>
 
                         <div className={styles.priceCont}>

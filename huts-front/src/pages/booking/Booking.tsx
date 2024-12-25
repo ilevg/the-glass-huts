@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
-import { format, differenceInDays } from "date-fns"
+import { format, differenceInDays, eachDayOfInterval } from "date-fns"
 
 import styles from './Booking.module.scss'
 
@@ -11,6 +11,7 @@ import Calendar from '../../components/calendar/Calendar'
 import { dropdownData } from './data'
 import about_4 from '../../assets/images/about/about-4.png'
 import { useBookingContext } from '../../context'
+import { fetchDates } from '../../services/apiService'
 
 
 
@@ -20,11 +21,24 @@ const Booking = () => {
     const [checkIn, setCheckIn] = useState<Date | null>(null)
     const [checkOut, setCheckOut] = useState<Date | null>(null)
     const [guests, setGuests] = useState<number>(1)
-
+    const [bokedDates, setBokedDates] = useState<Date[]>([new Date])
     const [calVisible, setCalVisible] = useState<boolean>(false)
     const [optionsExtra, setOptionsExtra] = useState<{ id?: number; title: string; desc?: string; text: string[] }[]>([]);
 
-    const bokedDates = [new Date]
+    useEffect(() => {
+        const fetchAndSetDates = async () => {
+            const dates = await fetchDates();
+            const res = dates.flatMap((date: { check_in: Date; check_out: Date }) =>
+                eachDayOfInterval({
+                    start: new Date(date.check_in),
+                    end: new Date(date.check_out),
+                })
+            );
+            setBokedDates(res);
+        };
+
+        fetchAndSetDates();
+    }, [checkIn, setCheckOut]);
 
     const daysBetween = checkIn && checkOut ? differenceInDays(checkOut, checkIn) : 0
 
@@ -49,7 +63,7 @@ const Booking = () => {
     };
 
     useEffect(() => {
-        setBookingData({
+        setBookingData && setBookingData({
             start: checkIn,
             end: checkOut,
             guestsNumb: guests,

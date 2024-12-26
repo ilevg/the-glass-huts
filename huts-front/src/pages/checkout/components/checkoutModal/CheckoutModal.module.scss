@@ -1,0 +1,46 @@
+.container {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgba($color: #000000, $alpha: .7);
+    z-index: 1;
+}
+
+.hidden {
+    display: none;
+}
+
+.modal {
+    position: relative;
+    padding: 20px;
+    max-width: 320px;
+    width: 100%;
+    height: 240px;
+    border: 1px solid rgb(255, 255, 255);
+    background-color: rgb(255, 255, 255);
+}
+
+.modalItems {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    border: 1px solid rgb(233, 236, 224);
+}
+
+.title {
+    font-size: 40px;
+    color: rgb(91, 100, 96);
+}
+
+.desc {
+    color: rgb(126, 131, 128);
+}

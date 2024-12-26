@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { format, differenceInDays, eachDayOfInterval } from "date-fns"
 
 import styles from './Booking.module.scss'
@@ -40,7 +40,7 @@ const Booking = () => {
         fetchAndSetDates();
     }, [checkIn, setCheckOut]);
 
-    const daysBetween = checkIn && checkOut ? differenceInDays(checkOut, checkIn) : 0
+    const daysBetween = checkIn && checkOut ? differenceInDays(checkOut, checkIn) + 1 : 0
 
     const priceNigts = 3200 * daysBetween + (guests * 200)
     const priceExtraOptions = optionsExtra.reduce((acc, v) => {
@@ -49,7 +49,7 @@ const Booking = () => {
         }
         return acc
     }, 0)
-    const total = 3200 * daysBetween + (guests * 200) + priceExtraOptions
+    const total = priceNigts + priceExtraOptions
 
     const addItem = (item: { id?: number, title: string; desc?: string; text: string[] }) => {
         setOptionsExtra((prev) => {
@@ -193,7 +193,11 @@ const Booking = () => {
                                 checkIn && checkOut ? <span>{total}kr</span> : '0kr'
                             }
                         </div>
-                        <MyButton width='100%' text='BOOK' bg='rgb(91, 100, 96)' link='/checkout' />
+                        <div className={styles.btnCont}>
+                            <MyButton width='100%' text='BOOK' bg='rgb(91, 100, 96)' link={checkIn && checkOut ? '/checkout' : ''} />
+                            <span className={`${!checkIn || !checkOut ? styles.btnOff : ''}`}></span>
+                        </div>
+
                     </div>
                 </div>
             </div>

@@ -28,7 +28,7 @@ const Dropdown = ({ data, optionsExtra, addBtn, onClick }: DropdownProps) => {
         <div className={styles.dropdownCont}>
             {
                 data.map((item, index) => (
-                    <div key={item.title} className={styles.dropdown}>
+                    <div key={`${item.title}${index}`} className={styles.dropdown}>
                         <div className={styles.dropHeader}>
                             <div className={styles.dropTitle}>
                                 {

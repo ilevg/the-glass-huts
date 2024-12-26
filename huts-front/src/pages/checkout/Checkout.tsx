@@ -6,58 +6,156 @@ import { Link } from 'react-router-dom'
 import { useBookingContext } from '../../context'
 import { format } from "date-fns"
 import { postOrder } from '../../services/apiService'
-import { FormEvent, useState } from 'react'
+import { FormEvent, useEffect, useState } from 'react'
+import CheckoutModal from './components/checkoutModal/CheckoutModal'
 
+interface PersonalInfo {
+    fName: string
+    lName: string
+    email: string
+    phone: string
+}
+interface CardInfo {
+    card: string
+    ccv: string
+    cardExpired: string
+}
 const Checkout = () => {
     const { start, end, guestsNumb, priceWithoutOptions, totalPrice, options, days } = useBookingContext()
+    const [personalInfo, setPersonalInfo] = useState<PersonalInfo>({ fName: '', lName: '', email: '', phone: '' })
+    const [cardInfo, setCardInfo] = useState<CardInfo>({ card: '', ccv: '', cardExpired: '', })
+    const [orderCreated, setOrderCreated] = useState<boolean>(false)
 
-    const [fName, setFName] = useState<string>('aa')
-    const [lName, setLName] = useState<string>('aa')
-    const [email, setEmail] = useState<string>('aa')
-    const [phone, setPhone] = useState<string>('aa')
+    const optionsToStr = options.map((opt) => opt.title).join(',')
 
     const orderSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+
         postOrder({
             check_in: start,
             check_out: end,
             guests: guestsNumb,
-            options: JSON.stringify(options),
+            options: optionsToStr,
             total: totalPrice,
-            first_name: fName,
-            last_name: lName,
-            email: email,
-            phone: phone,
+            first_name: personalInfo.fName,
+            last_name: personalInfo.lName,
+            email: personalInfo.email,
+            phone: personalInfo.phone,
+        }).then((res) => {
+            res && console.log(res.status)
+            res && res.status <= 201 ? setOrderCreated(true) : setOrderCreated(false)
         })
+
+        setPersonalInfo({ fName: '', lName: '', email: '', phone: '' })
+        setCardInfo({ card: '', ccv: '', cardExpired: '' })
     }
 
+    const personalInputHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target
+        setPersonalInfo((prev) => ({
+            ...prev,
+            [name]: value
+        }))
+    }
+    const cardInputHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target
+        setCardInfo((prev) => ({
+            ...prev,
+            [name]: value
+        }))
+    }
+
+    useEffect(() => {
+        orderCreated
+            ? document.body.classList.add('overflow-hidden')
+            : document.body.classList.remove('overflow-hidden')
+    }, [orderCreated])
 
     return (
-        <section className={styles.booking}>
+        <section>
             <Title titleText='Checkout' bg={about_4} />
+            <div className={`${!orderCreated ? styles.modalHidden : ''}`}>
+                <CheckoutModal />
+            </div>
             <div className={styles.bookingCont}>
-                <form onSubmit={(e) => orderSubmit(e)} className={styles.services}>
+                <form onSubmit={(e) => start && end && orderSubmit(e)} className={styles.services}>
                     <h2 className={styles.subTitle}>Personal Information</h2>
 
                     <div className={styles.form}>
                         <div className={styles.inputsCont}>
-                            <input required className={styles.input} type="text" name='fName' placeholder='First Name' />
-                            <input required className={styles.input} type="text" name='lName' placeholder='Last Name' />
+                            <input
+                                required
+                                className={styles.input}
+                                type="text"
+                                name='fName'
+                                placeholder='First Name'
+                                value={personalInfo.fName}
+                                onChange={personalInputHandle}
+                            />
+                            <input
+                                required
+                                className={styles.input}
+                                type="text"
+                                name='lName'
+                                placeholder='Last Name'
+                                value={personalInfo.lName}
+                                onChange={personalInputHandle}
+                            />
                         </div>
                         <div className={styles.inputsCont}>
-                            <input required className={styles.input} type="email" name='email' placeholder='Email' />
-                            <input required className={styles.input} type="tel" name='tel' placeholder='Phone Number' />
+                            <input
+                                required
+                                className={styles.input}
+                                type="email"
+                                name='email'
+                                placeholder='Email'
+                                value={personalInfo.email}
+                                onChange={personalInputHandle}
+                            />
+                            <input
+                                required
+                                className={styles.input}
+                                type="tel"
+                                name='phone'
+                                placeholder='Phone Number'
+                                value={personalInfo.phone}
+                                onChange={personalInputHandle}
+                            />
                         </div>
                     </div>
 
                     <h2 className={styles.subTitle}>Pay with Card</h2>
                     <div className={styles.form}>
                         <div className={styles.inputsCont}>
-                            <input required className={styles.input} type="number" name='cardNumber' placeholder='Card Number' />
+                            <input
+                                required
+                                className={styles.input}
+                                type="number"
+                                name='card'
+                                placeholder='Card Number'
+                                value={cardInfo.card}
+                                onChange={cardInputHandle}
+                            />
                         </div>
                         <div className={styles.inputsCont}>
-                            <input required className={styles.input} type="number" name='cardCcv' placeholder='CCV' />
-                            <input required className={styles.input} type="date" name='cardExp' placeholder='Expiration' />
+                            <input
+                                required
+                                className={styles.input}
+                                type="number"
+                                name='ccv'
+                                placeholder='CCV'
+                                value={cardInfo.ccv}
+                                onChange={cardInputHandle}
+                            />
+                            <input
+                                required
+                                className={styles.input}
+                                type="date"
+                                name='cardExpired'
+                                placeholder='Expiration'
+                                value={cardInfo.cardExpired}
+                                onChange={cardInputHandle}
+                            />
                         </div>
                     </div>
 
@@ -72,7 +170,10 @@ const Checkout = () => {
                             <Link to='/terms'>Terms & Conditions</Link>
                         </label>
                     </div>
-                    <MyButton width='100%' text='CONFIRM AND PAY' bg='#5B6460' />
+                    <div className={styles.payBtnCont}>
+                        <MyButton width='100%' text='CONFIRM AND PAY' bg='#5B6460' />
+                        <span className={`${!start || !end ? styles.btnOff : ''}`}></span>
+                    </div>
                 </form>
 
                 <div className={styles.priceCardCont}>

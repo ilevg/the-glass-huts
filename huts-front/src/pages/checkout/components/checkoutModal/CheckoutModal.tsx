@@ -6,9 +6,11 @@ import { redirect, useNavigate } from 'react-router-dom'
 const CheckoutModal = () => {
     const [hidden, setHidden] = useState(false)
     const navigate = useNavigate()
+
     const modalHandle = () => {
         navigate('/')
         setHidden(true)
+        document.body.classList.remove('overflow-hidden')
     }
 
     return (

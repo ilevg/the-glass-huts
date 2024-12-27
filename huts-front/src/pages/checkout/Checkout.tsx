@@ -48,6 +48,7 @@ const Checkout = () => {
 
         setPersonalInfo({ fName: '', lName: '', email: '', phone: '' })
         setCardInfo({ card: '', ccv: '', cardExpired: '' })
+        setOrderCreated(false)
     }
 
     const personalInputHandle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,9 +67,7 @@ const Checkout = () => {
     }
 
     useEffect(() => {
-        orderCreated
-            ? document.body.classList.add('overflow-hidden')
-            : document.body.classList.remove('overflow-hidden')
+        orderCreated && document.body.classList.add('overflow-hidden')
     }, [orderCreated])
 
     return (
